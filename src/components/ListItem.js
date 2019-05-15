@@ -6,10 +6,10 @@ import * as actions from '../actions';
 
 class ListItem extends Component {
   renderDescription() {
-    const { selectedLibraryId } = this.props;
-    const { id, description } = this.props.library.item;
+    const { expanded } = this.props;
+    const { description } = this.props.library.item;
 
-    if (id === selectedLibraryId) {
+    if (expanded) {
       return <Text>{description}</Text>;
     }
   }
@@ -39,7 +39,13 @@ const styles = {
   descriptionStyle: {}
 };
 
-const mapStateToProps = state => ({ selectedLibraryId: state.selectedLibraryId });
+const mapStateToProps = (state, ownProps) => {
+  const expanded = state.selectedLibraryId === ownProps.library.item.id;
+
+  return {
+    expanded
+  };
+};
 
 export default connect(
   mapStateToProps,
